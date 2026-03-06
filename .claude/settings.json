@@ -1,0 +1,52 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd frontend && npm *)",
+      "Bash(cd frontend && npx vitest *)",
+      "Bash(cd frontend && npx playwright *)",
+      "Bash(cd backend && composer *)",
+      "Bash(cd backend && ./vendor/bin/phpunit *)",
+      "Bash(cd backend && ./vendor/bin/php-cs-fixer *)",
+      "Bash(cd backend && php -S *)",
+      "Bash(cd realtime && pip install *)",
+      "Bash(cd realtime && python *)",
+      "Bash(cd realtime && pytest *)",
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git branch *)",
+      "Bash(git checkout *)",
+      "Bash(git switch *)",
+      "Bash(git merge *)",
+      "Bash(git pull *)",
+      "Bash(git stash *)",
+      "Bash(docker compose *)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)",
+      "Bash(git reset --hard *)"
+    ]
+  },
+  "env": {
+    "NEXT_PUBLIC_API_URL": "http://localhost:8080",
+    "NEXT_PUBLIC_WS_URL": "ws://localhost:8765"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/auto-lint.sh",
+            "timeout": 30000
+          }
+        ]
+      }
+    ]
+  }
+}
